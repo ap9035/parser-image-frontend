@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from "axios";
+import styles from './App.module.css';
 
 const serverUrl = 'https://parser-image-backend-ahvijonuza-de.a.run.app' || process.env.REACT_APP_SERVER_URL;
 
@@ -7,6 +8,7 @@ function App() {
     const [image, setImage] = useState<string | ArrayBuffer | null>('');
     const [base64String, setBase64String] = useState<string | ArrayBuffer | null>('');
     const [response, setResponse] = useState<string | ArrayBuffer | null>('');
+    const [loading, setLoading] = useState<boolean>(false);
 
     function handlePaste(e: React.ClipboardEvent<HTMLTextAreaElement>) {
         try{
@@ -39,6 +41,7 @@ function App() {
     }
 
     function handleOnClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        setLoading(true)
         axios.post(serverUrl+'/base64ImageParser',
             {
                 filename: 'filename',
@@ -50,33 +53,38 @@ function App() {
                 setResponse(response.data["parser"]);
         }).catch((error) => {
             alert('Error: ' + error);
+        }).finally(() => {
+            setLoading(false);
         })
     }
 
     return (
         <>
             {image && <img src={image.toString()} alt="Pasted from clipboard" />}
+            {base64String &&
+                <>
+                    <br/>
+                    Base64 String:
+                    <br/>
+                    <textarea value={base64String.toString()} readOnly={true} />
+                    <br/>
+                    <button onClick={handleOnClick} > Submit </button>
+                </>
+            }
+            <br/>
             <br/>
               <textarea
                   placeholder="Paste a file from clipboard here"
                   onPaste={handlePaste}
                   readOnly={true}
               />
-            <br/>
-            <br/>
-            {base64String &&
-                <>
-                    Base64 String:
-                    <br/>
-                    <textarea value={base64String.toString()} readOnly={true} /><br/>
-                    <button onClick={handleOnClick} > Submit </button>
-                </>
-            }
+            {loading && <p> Loading... </p>}
             {response &&
                 <>
+                    <br/>
                     Response:
                     <br/>
-                    <textarea value={response.toString()} readOnly={true} />
+                    <textarea className={styles.resp} value={response.toString()} readOnly={true} />
                 </>
                 }
         </>

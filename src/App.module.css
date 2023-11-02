@@ -1,0 +1,8 @@
+textarea {
+    min-width: 800px; /* 最小寬度為 200 像素 */
+    min-height: 100px; /* 最小高度為 100 像素 */
+}
+
+.resp {
+    min-height: 500px;
+}
