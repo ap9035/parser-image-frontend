@@ -19,6 +19,7 @@ jobs:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
       - id: 'docker login'
+        uses: 'docker/login-action@v1'
         with:
           registry: 'gcr.io'
           username: 'oauth2accesstoken'
