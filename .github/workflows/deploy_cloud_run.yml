@@ -2,7 +2,7 @@ name: Cloud Run CI
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   deploy:
