@@ -48,6 +48,8 @@ function App() {
             ).then((response) => {
                 console.log(response);
                 setResponse(response.data["parser"]);
+        }).catch((error) => {
+            alert('Error: ' + error);
         })
     }
 

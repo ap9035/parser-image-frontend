@@ -1,0 +1,23 @@
+name: Cloud Run CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - uses: 'actions/checkout@v3'
+
+    - uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+    - id: 'deploy'
+      uses: 'google-github-actions/deploy-cloudrun@v1'
+      with:
+        service: 'hello-cloud-run'
+        image: 'gcr.io/cloudrun/hello'
