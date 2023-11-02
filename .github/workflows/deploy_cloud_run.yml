@@ -17,6 +17,7 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+          token_format: 'access_token'
 
       - id: 'docker_login'
         uses: 'docker/login-action@v1'
