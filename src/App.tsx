@@ -72,7 +72,7 @@ function App() {
                 <>
                     Response:
                     <br/>
-                    <code> {response.toString()} readOnly={true} </code>
+                    <textarea value={response.toString()} readOnly={true} />
                 </>
                 }
         </>
