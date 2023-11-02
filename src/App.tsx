@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import axios from "axios";
 
+const serverUrl = 'https://parser-image-backend-ahvijonuza-de.a.run.app' || process.env.REACT_APP_SERVER_URL;
+
 function App() {
     const [image, setImage] = useState<string | ArrayBuffer | null>('');
     const [base64String, setBase64String] = useState<string | ArrayBuffer | null>('');
@@ -37,7 +39,7 @@ function App() {
     }
 
     function handleOnClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-        axios.post('http://localhost:8000/base64ImageParser',
+        axios.post(serverUrl+'/base64ImageParser',
             {
                 filename: 'filename',
                 body: base64String
