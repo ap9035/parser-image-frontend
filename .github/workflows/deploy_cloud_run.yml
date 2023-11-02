@@ -9,6 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: 'actions/checkout@v3'
-    - name: hello-world
-      run: echo "Test"
+      - id: 'checkout'
+        name: 'checkout action'
+        uses: 'actions/checkout@v3'
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+      - id: 'docker login'
+        with:
+          registry: 'gcr.io'
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.access_token }}'
+
+
